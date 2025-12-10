@@ -1,4 +1,4 @@
-## Tini-Omni (Based on SLAM-LLM / SLAM-Omni)
+## [WIP] Tini-Omni (Based on SLAM-LLM / SLAM-Omni)
 
 **Tini-Omni** is a customized, lightweight speech-to-speech (S2S) conversational system built on top of the original projects **SLAM-LLM** and **SLAM-Omni**.
 
