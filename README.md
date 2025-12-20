@@ -31,15 +31,15 @@ Unlike the original `SLAM-LLM` repository, which contains multiple tasks, this r
 ## Demo & Checkpoint
 
 ### 🌐 Online Demo
-- **Live Demo**: https://tiniomni.github.io/demo/
+- [Tini-Omni](https://tiniomni.github.io/demo/)
 
 ### 🎥 Demo Video
 
-https://github.com/user-attachments/assets/e5245aae-4f57-4ce9-b002-fad46c4e12c2
+https://github.com/user-attachments/assets/a810d592-b13f-4a22-91f2-89d852e96eb6
 
 > If the video does not autoplay, please click the play button or open it directly from the `docs/` directory.
 
-### 📦 Checkpoints
+### 📦 Checkpoint
 We provide a single-stage fine-tuned Tini-Omni model with a group size of **3**. The following checkpoint is available for download:
 - [Tini-Omni-Checkpoint](https://drive.google.com/file/d/1zuZxWJMBZpnsGhgY0Hj6tOj6RRkcYlC0/view?usp=sharing)
   
