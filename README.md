@@ -1,5 +1,6 @@
 ## [WIP] Tini-Omni (Based on SLAM-LLM / SLAM-Omni)
 
+
 **Tini-Omni** is a customized, lightweight speech-to-speech (S2S) conversational system built on top of the original projects **SLAM-LLM** and **SLAM-Omni**.
 
 Compared to the original SLAM-Omni implementation, this repository:
@@ -11,28 +12,107 @@ Compared to the original SLAM-Omni implementation, this repository:
 
 Unlike the original `SLAM-LLM` repository, which contains multiple tasks, this repository focuses on a **single end-to-end pipeline for (Tini-)Omni S2S** under `examples/s2s`. Other example recipes from the original project have been removed; only files and scripts that exist in this directory are considered part of the supported pipeline.
 
+## Table of Contents
+
+1. [Demo&Checkpoint](#Demo&Checkpoint)
+2. [Repository Layout / 仓库结构](#repository-layout)
+3. [Installation & Environment](#installation--environment)
+4. [Tini-Omni Recipe](#tini-omni-recipe)
+    - [Environment setup (S2S example)](#environment-setup-s2s-example)
+    - [Data preparation](#data-preparation)
+    - [Training](#training)
+    - [Inference](#inference)
+5. [Development & Extension](#development--extension)
+6. [License & Acknowledgements](#license--acknowledgements)
+7. [Citation](#citation)
+
+
+---
+## Demo & Checkpoint
+
+### 🌐 Online Demo
+- **Live Demo**: https://tiniomni.github.io/demo/
+
+### 🎥 Demo Video
+<video src="/docs/demo_video.mp4" controls width="720"></video>
+
+> If the video does not autoplay, please click the play button or open it directly from the `docs/` directory.
+
+### 📦 Pretrained Checkpoints
+- **Tini-Omni (Gemma 3 270M, S2S)**  
+  👉 https://drive.google.com/file/d/1zuZxWJMBZpnsGhgY0Hj6tOj6RRkcYlC0/view?usp=sharing
+
+
 ---
 
-## Repository Layout
+<h2>Repository Layout</h2>
+<h2>仓库结构</h2>
 
-- **Root**
-  - `pyproject.toml` – Python package configuration. The package name is `slam-llm`, and dependencies are loaded from `requirements.txt`.
-  - `requirements.txt` – Core Python dependencies (e.g. `torch`, `transformers`, `peft`, `datasets`, `hydra-core`).
-  - `src/slam_llm/` – Shared training / inference utilities (model construction, configuration management, distributed training helpers, etc.).
-  - `examples/` – Example tasks; in this fork only `s2s` (Tini-/SLAM-Omni) is kept.
+<pre style="
+white-space: pre-wrap;
+word-break: break-word;
+font-family: monospace;
+font-size: 0.9em;
+line-height: 1.35;
+">
+/root/
+├─ pyproject.toml
+│  └─ Python package configuration. The package name is slam-llm,
+│     and dependencies are loaded from requirements.txt.
+│
+├─ requirements.txt
+│  └─ Core Python dependencies
+│     (e.g. torch, transformers, peft, datasets, hydra-core).
+│
+├─ src/
+│  └─ slam_llm/
+│     └─ Shared training / inference utilities
+│        (model construction, configuration management,
+│         distributed training helpers, etc.).
+│
+├─ examples/
+│  └─ s2s/                               (Tini-/SLAM-Omni main example)
+│     ├─ finetune_s2s.py
+│     │  └─ Python entry point for S2S training / fine-tuning
+│     │     (used by shell scripts under scripts/finetune/).
+│     │
+│     ├─ inference_s2s.py
+│     │  └─ Python entry point for S2S inference
+│     │     (used by shell scripts under scripts/inference/).
+│     │
+│     ├─ s2s_config.py
+│     │  └─ Dataclass-style configuration for model, training,
+│     │     data and decoding; this is where the Tini-Omni
+│     │     model configuration is defined.
+│     │
+│     ├─ conf/
+│     │  └─ Hydra / YAML configs (e.g. prompt.yaml).
+│     │
+│     ├─ scripts/
+│     │  ├─ finetune/
+│     │  │  └─ finetune_s2s_group.sh
+│     │  │     (Gemma 3 270M + CosyVoice-based training).
+│     │  │
+│     │  └─ inference/
+│     │     ├─ inference_s2s_online.sh
+│     │     └─ inference_s2s_batch.sh
+│     │
+│     ├─ generate/
+│     │  └─ High-level generation interfaces
+│     │     (online dialogue, audio generation, etc.).
+│     │
+│     ├─ model/
+│     │  └─ Tini-/S2S-specific model definitions
+│     │     and factory functions.
+│     │
+│     ├─ speech_dataset_s2s.py
+│     │  └─ Dataset loading and preprocessing for the S2S task.
+│     │
+│     └─ audio_prompt/
+│        └─ Example timbre prompts for conditioning the voice.
+</pre>
 
--- **`examples/s2s/` (Tini-/SLAM-Omni main example)**
-  - `finetune_s2s.py` – Python entry point for S2S training / fine-tuning (used by shell scripts under `scripts/finetune/`).
-  - `inference_s2s.py` – Python entry point for S2S inference (used by shell scripts under `scripts/inference/`).
-  - `s2s_config.py` – Dataclass-style configuration for model, training, data and decoding; this is where the **Tini-Omni model configuration** is defined.
-  - `conf/` – Hydra / YAML configs (e.g. `prompt.yaml`) used together with the training and inference scripts.
-  - `scripts/`
-    - `finetune/` – S2S training script `finetune_s2s_group.sh` (Gemma 3 270M + CosyVoice-based training; Mini-Omni scripts from upstream have been removed).
-    - `inference/` – Inference scripts such as `inference_s2s_online.sh` and `inference_s2s_batch.sh` (single-turn online / batch inference).
-  - `generate/` – High-level generation interfaces (online dialogue, audio generation, etc.).
-  - `model/` – Tini-/S2S-specific model definitions and factory functions.
-  - `speech_dataset_s2s.py` – Dataset loading and preprocessing for the S2S task.
-  - `audio_prompt/` – Example timbre prompts for conditioning the voice.
+
 
 The following sections summarize the S2S recipe implemented in this repository (adapted from the original SLAM-Omni documentation). For more extensive background on datasets and training strategies, please refer to the original SLAM-LLM / SLAM-Omni repository.
 
