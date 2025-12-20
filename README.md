@@ -15,7 +15,7 @@ Unlike the original `SLAM-LLM` repository, which contains multiple tasks, this r
 ## Table of Contents
 
 1. [Demo&Checkpoint](#Demo&Checkpoint)
-2. [Repository Layout / 仓库结构](#repository-layout)
+2. [Repository Layout](#repository-layout)
 3. [Installation & Environment](#installation--environment)
 4. [Tini-Omni Recipe](#tini-omni-recipe)
     - [Environment setup (S2S example)](#environment-setup-s2s-example)
@@ -34,7 +34,7 @@ Unlike the original `SLAM-LLM` repository, which contains multiple tasks, this r
 - **Live Demo**: https://tiniomni.github.io/demo/
 
 ### 🎥 Demo Video
-<video src="/docs/demo_video.mp4" controls width="720"></video>
+<video src="docs/demo_video.mp4" controls width="720"></video>
 
 > If the video does not autoplay, please click the play button or open it directly from the `docs/` directory.
 
@@ -46,7 +46,6 @@ Unlike the original `SLAM-LLM` repository, which contains multiple tasks, this r
 ---
 
 <h2>Repository Layout</h2>
-<h2>仓库结构</h2>
 
 <pre style="
 white-space: pre-wrap;
