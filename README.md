@@ -41,7 +41,7 @@ https://github.com/user-attachments/assets/a810d592-b13f-4a22-91f2-89d852e96eb6
 
 ### 📦 Checkpoint
 We provide a single-stage fine-tuned Tini-Omni model with a group size of **3**. The following checkpoint is available for download:
-- [Tini-Omni-Checkpoint](https://drive.google.com/file/d/1zuZxWJMBZpnsGhgY0Hj6tOj6RRkcYlC0/view?usp=sharing)
+- [Tini-Omni-Checkpoint](https://drive.google.com/drive/folders/1zw0CdEQsRnhgtpkgD8CvsSS0JdBB-c9A?usp=sharing)
   
 
 
