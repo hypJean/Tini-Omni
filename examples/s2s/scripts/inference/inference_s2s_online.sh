@@ -53,7 +53,7 @@ audio_repetition_penalty=1.2        # default 1.0, set to 1.2 for reduce silence
 # decode config
 max_new_tokens=3000
 # force_audio_tokens=300    # 新增：当生成打到 max_new_tokens 时，截取前 100 个 audio tokens 并解码；设为 0 则禁用                 # 500 for SNAC, 3000 for CosyVoice-single
-do_sample=true
+do_sample=false
 top_p=1.0
 top_k=0
 temperature=1.0
